@@ -17,14 +17,31 @@ public class Person {
         this.gender = gender;
     }
 
-    // getTopPreference
-
+    // getTopPreference 
+    public Integer getTopPreference() {
+        if (preference.isEmpty()){ //checks list is empty
+            return null;
+        }
+        return preferences.get(0);
+    }
+    
     // make person free
+public void makeFree() {
+    this.engagedTo = null; //clears the partner variable
+}
 
     // set engaged to
-
+public void setEngagedTo(Integer partnerId) {
+    this.engagedTo = partnerId; //saves partner id
+}
+    //added to check if person has a partner alr
+    public boolean isEngaged() {
+    return this.engagedTo != null; //should retunr true if have a partner
+}
     // remove value from preference list
-
+    public void removValueFromPreferenceList(Integer value) {
+        this.preferences.remove(value); //removes speitc id from list
+    } 
     // remove all proceeding values from preference list
 
     // getname
