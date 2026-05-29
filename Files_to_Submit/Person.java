@@ -19,7 +19,7 @@ public class Person {
 
     // getTopPreference 
     public Integer getTopPreference() {
-        if (preference.isEmpty()){ //checks list is empty
+        if (preferences.isEmpty()){ //checks list is empty
             return null;
         }
         return preferences.get(0);
@@ -40,7 +40,7 @@ public void setEngagedTo(Integer partnerId) {
         this.preferences.remove(value); //removes speitc id from list
     } 
     // remove all proceeding values from preference list
-public ArrayList<Integer> removeAllProceedingValuesFromPreferenceList(Inteher partnerId) { 
+public ArrayList<Integer> removeAllProceedingValuesFromPreferenceList(Integer partnerId) { 
     ArrayList<Integer> removedSuccessors = new ArrayList<>(); // makes list to hold removed ppl
     int index = preferences.indexOf(partnerId); // finds where partner is in list
     if (index != -1) { // checks if parrtner is found
