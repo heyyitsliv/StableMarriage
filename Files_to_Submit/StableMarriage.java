@@ -60,19 +60,54 @@ public class StableMarriage {
     }
 
     // generate stable pairings method (pass in two ArrayLists of men and women)
-    public static void stablePairings(ArrayList<Person> males, ArrayList<Person> females) {
+    public static void stablePairings(ArrayList<Person> proposers, ArrayList<Person> recievcers) {
         // set each person to be free;
-        // while (some man m with a nonempty preference list is free) {
-        //      w = first woman on m's list;
-        //      if (some man p is engaged to w) {
-        //          set p to be free
-        //      }
-        //      set m and w to be engaged to each other
-        //      for (each successor q of m on w's list) {
-        //          delete w from q's preference list
-        //          delete q from w's preference list
-        //      }
-        // }
+        for (Person p : proposers) {
+            p.makeFree();
+        }
+        for (Person r : recievcers) {
+            r.makeFree();
+        }
+
+        boolean freeProposerExists = true;
+
+        // while (some proposer p with a nonempty preference list is free) {
+        while (freeProposerExists) {
+            freeProposerExists = false;
+
+            // go through all proposers for free one w/ options left
+            for (int pId = 0; pId < proposers.size(); pId++) {
+                Person p = proposers.get(pId);
+
+                if (!p.isEngaged() && p.getTopPreference() != null) {
+                    freeProposerExists = true;
+
+                    // r = first reviewer on proposers list
+                    int rId = p.getTopPreference();
+                    Person r = recievcers.get(rId);
+
+                    // if (some proposer t is engaged to r) {set t to be free}
+                    if (r.isEngaged()) {
+                        int tId = r.getEngagedTo();
+                        proposers.get(tId).makeFree();
+                    }
+
+                    // set p & r to be engaged to each other
+                    p.setEngagedTo(rId);
+                    r.setEngagedTo(pId);
+
+                    ArrayList<Integer> removedSuccessorIds = r.removeAllProceedingValuesFromPreferenceList(pId);
+
+                    // for (each successor q of p on r's list) {delete r from q's preference list; delete q from r's preference list}
+                    for (Integer qId : removedSuccessorIds) {
+                        Person q = proposers.get(qId);
+                        q.removValueFromPreferenceList(rId);
+                    }
+
+                    break;
+                }
+            }               
+        }
     }
 
     // print output method [prints the final successful pairings with male's choice # of female]
