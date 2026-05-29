@@ -36,7 +36,7 @@ public class StableMarriage {
             for (int i = 2; i < parts.length; i++) {
                 preferences.add(Integer.parseInt(parts[i]));
             }
-            //added
+            //added: constructs and save new ppl
             allPerson.add(new Person(name, preferences, gender));
         }
  // creates an ArrayList for males
@@ -44,7 +44,8 @@ public class StableMarriage {
         
         // creates an ArrayList for females
         ArrayList<Person> females = new  ArrayList<>();
-            //added
+        
+            //added: distribute ppl into separate lists
             for (int i = 0; i < allPerson.size(); i++) {
             char gender = fileLines.get(i)[1].toUpperCase().charAt(0);
             if (gender == 'M') {
