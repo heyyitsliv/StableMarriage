@@ -111,11 +111,56 @@ public class StableMarriage {
         //     }
         // }
         
+        // run 1: men favored
+        System.out.println("men favored run");
+        stablePairings(males, females);
+        // printOutput();
+
+        // reset data for run 2
+        males.clear();
+        females.clear();
+        // repopulate after clearing
+        isParsingMen = true;
+        try {
+            File file = new File(filename);
+            Scanner scanner = new Scanner(file);
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+
+                // if line is END, finish current section
+                if (line.equalsIgnoreCase("END")) {
+                    isParsingMen = false;   // switch to woam parsing
+                    continue;
+                }
+
+                // split line by : or whitespace
+                String[] parts = line.split("[:\\s]+");
+                String name = parts[0];
+
+                // all other elements in line are preferences
+                ArrayList<Integer> preferences = new ArrayList<>();
+                for (int i = 1; i < parts.length; i++) {
+                    preferences.add(Integer.parseInt(parts[i]));
+                }
+
+                // assign gender based on bool (before/after END)
+                if (isParsingMen) {
+                    males.add(new Person(name, preferences, 'M'));
+                } else {
+                    females.add(new Person(name, preferences, 'W'));
+                }
             }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("error: file " + filename + " not found");
+            return;
         }
-        
-        
-        
+
+        // run 2: woman favored
+        System.out.println("woman favored run");
+        stablePairings(females, males);
+        // printOutput();    
     }
 
     // generate stable pairings method (pass in two ArrayLists of men and women)
