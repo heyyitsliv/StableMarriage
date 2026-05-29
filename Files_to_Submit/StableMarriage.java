@@ -11,47 +11,106 @@ public class StableMarriage {
     // run test method (imports the file as an argument)
     public static void runTest(String filename) {
         // read input file
-        ArrayList<String[]> fileLines = new ArrayList<>();
+        // ArrayList<String[]> fileLines = new ArrayList<>();
+        // try {
+        //     File file = new File(filename);
+        //     Scanner scanner = new Scanner(file);
+        //     while (scanner.hasNextLine()) {
+        //         String line = scanner.nextLine();
+        //         if (!line.isEmpty() && !line.equalsIgnoreCase("END")){  // skip empty lines and "END" lines
+        //             fileLines.add(line.split("[:\\s]+"));
+        //         }
+        //     }
+        //     scanner.close();
+        // } catch (FileNotFoundException e) {
+        //     System.out.println("Error: File " + filename + " not found.");
+        //         return;
+        // }
+                        
+        // creates persons from person class
+        // ArrayList<Person> allPerson = new ArrayList<>();
+        // for (String[] parts : fileLines) {
+        //     String name = parts[0];
+        //     char gender = parts[1].toUpperCase().charAt(0);
+        //     ArrayList<Integer> preferences = new ArrayList<>();
+        //     for (int i = 2; i < parts.length; i++) {
+        //         preferences.add(Integer.parseInt(parts[i]));
+        //     }
+        //     //added: constructs and save new ppl
+        //     allPerson.add(new Person(name, preferences, gender));
+        // }
+
+        // creates an ArrayList for males
+        ArrayList<Person> males = new ArrayList<>();
+        
+        // creates an ArrayList for females
+        ArrayList<Person> females = new ArrayList<>();
+        
+        //added: distribute ppl into separate lists
+        // for (int i = 0; i < allPerson.size(); i++) {
+        //     char gender = fileLines.get(i)[1].toUpperCase().charAt(0);
+        //     if (gender == 'M') {
+        //         males.add(allPerson.get(i));
+        //     } else if (gender == 'F') {
+        //         females.add(allPerson.get(i));
+        //     }
+        // }
+
+        // new scanner that separates the male/female when hitting end
+        boolean isParsingMen = true;
         try {
             File file = new File(filename);
             Scanner scanner = new Scanner(file);
+
             while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if (!line.isEmpty()){
-                    fileLines.add(line.split("\\s+"));
+                String line = scanner.nextLine().trim();
+
+                // if line is END, finish current section
+                if (line.equalsIgnoreCase("END")) {
+                    isParsingMen = false;   // switch to woam parsing
+                    continue;
+                }
+
+                // split line by : or whitespace
+                String[] parts = line.split("[:\\s]+");
+                String name = parts[0];
+
+                // all other elements in line are preferences
+                ArrayList<Integer> preferences = new ArrayList<>();
+                for (int i = 1; i < parts.length; i++) {
+                    preferences.add(Integer.parseInt(parts[i]));
+                }
+
+                // assign gender based on bool (before/after END)
+                if (isParsingMen) {
+                    males.add(new Person(name, preferences, 'M'));
+                } else {
+                    females.add(new Person(name, preferences, 'W'));
                 }
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            System.out.println("Error: File " + filename + " not found.");
-                return;
+            System.out.println("error: file " + filename + " not found");
+            return;
         }
-                        
-        // creates persons from person class
-        ArrayList<Person> allPerson = new ArrayList<>();
-        for (String[] parts : fileLines) {
-            String name = parts[0];
-            char gender = parts[1].toUpperCase().charAt(0);
-            ArrayList<Integer> preferences = new ArrayList<>();
-            for (int i = 2; i < parts.length; i++) {
-                preferences.add(Integer.parseInt(parts[i]));
-            }
-            //added: constructs and save new ppl
-            allPerson.add(new Person(name, preferences, gender));
-        }
- // creates an ArrayList for males
-        ArrayList<Person> males = new ArrayList<>();
         
-        // creates an ArrayList for females
-        ArrayList<Person> females = new  ArrayList<>();
+        // distribute peple into separate lists
+        // for (String[] parts : fileLines) {
+        //     String name = parts[0].replace(":", "");    // also removes the :
+        //     char gender = parts[1].toUpperCase().charAt(0);
+        //     ArrayList<Integer> preferences = new ArrayList<>();
+        //     for (int i = 2; i < parts.length; i++) {
+        //         preferences.add(Integer.parseInt(parts[i]));
+        //     }
+
+        //     Person newPerson = new Person(name, preferences, gender);
+        //     if (gender == 'M') {
+        //         males.add(newPerson);
+        //     } else if (gender == 'F') {
+        //         females.add(newPerson);
+        //     }
+        // }
         
-            //added: distribute ppl into separate lists
-            for (int i = 0; i < allPerson.size(); i++) {
-            char gender = fileLines.get(i)[1].toUpperCase().charAt(0);
-            if (gender == 'M') {
-                males.add(allPerson.get(i));
-            } else if (gender == 'F') {
-                females.add(allPerson.get(i));
             }
         }
         
