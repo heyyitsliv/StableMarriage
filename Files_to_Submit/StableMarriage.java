@@ -56,11 +56,7 @@ public class StableMarriage {
         }
         
         
-        // calls stable pairings method
-        //stablePairings(males, females);
         
-        // call print output method
-        //printOutput(males, females);
     }
 
     // generate stable pairings method (pass in two ArrayLists of men and women)
