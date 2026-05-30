@@ -26,48 +26,48 @@ public class Person {
     }
     
     // make person free
-public void makeFree() {
-    this.engagedTo = null; //clears the partner variable
-}
+    public void makeFree() {
+        this.engagedTo = null; //clears the partner variable
+    }
 
     // set engaged to
-public void setEngagedTo(Integer partnerId) {
-    this.engagedTo = partnerId; //saves partner id
-}
+    public void setEngagedTo(Integer partnerId) {
+        this.engagedTo = partnerId; //saves partner id
+    }
     
     // remove value from preference list
-    public void removValueFromPreferenceList(Integer value) {
+    public void removeValueFromPreferenceList(Integer value) {
         this.preferences.remove(value); //removes speitc id from list
     } 
     // remove all proceeding values from preference list
-public ArrayList<Integer> removeAllProceedingValuesFromPreferenceList(Integer partnerId) { 
-    ArrayList<Integer> removedSuccessors = new ArrayList<>(); // makes list to hold removed ppl
-    int index = preferences.indexOf(partnerId); // finds where partner is in list
-    if (index != -1) { // checks if parrtner is found
-    while (preferences.size() > index + 1) { // loops through all remaning ppl after partner
-        removedSuccessors.add(preferences.remove(index + 1)); // removes the worse choice
+    public ArrayList<Integer> removeAllProceedingValuesFromPreferenceList(Integer partnerId) { 
+        ArrayList<Integer> removedSuccessors = new ArrayList<>(); // makes list to hold removed ppl
+        int index = preferences.indexOf(partnerId); // finds where partner is in list
+        if (index != -1) { // checks if parrtner is found
+            while (preferences.size() > index + 1) { // loops through all remaning ppl after partner
+                removedSuccessors.add(preferences.remove(index + 1)); // removes the worse choice
+            }
+        }
+        return removedSuccessors;
     }
-}
-return removedSuccessors;
-}
     // getname
-public String getName() { // return the name
-    return name;
-}
+    public String getName() { // return the name
+        return name;
+    }
 
     // isEngaged
-public boolean isEngaged() {
-    return this.engagedTo != null; //should retunr true if have a partner
-}
-    // getEngagedTo
-public Integer getEngagedTo(){
-    return engagedTo; // returnd partner id
-}
-    // getFinalChoiceIndex
-public int getFinalChoiceIndex(){
-    if (engagedTo == null) { // checks if ended up alone
-        return -1; // should return -2 for single ppl
+    public boolean isEngaged() {
+        return this.engagedTo != null; //should retunr true if have a partner
     }
-    return originalPreferences.indexOf(engagedTo) + 1; // find og index and +1
+    // getEngagedTo
+    public Integer getEngagedTo(){
+        return engagedTo; // returnd partner id
+    }
+    // getFinalChoiceIndex
+    public int getFinalChoiceIndex(){
+        if (engagedTo == null) { // checks if ended up alone
+            return -1; // should return -2 for single ppl
         }
+        return originalPreferences.indexOf(engagedTo) + 1; // find og index and +1
+    }
 }
